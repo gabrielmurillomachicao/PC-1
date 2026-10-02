@@ -1,0 +1,26 @@
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: flyaway-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:?Falta DB_NAME en .env}
+      POSTGRES_USER: ${DB_USER:?Falta DB_USER en .env}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Falta DB_PASSWORD en .env}
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256"
+    ports:
+      - "127.0.0.1:${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  postgres_data:
+
