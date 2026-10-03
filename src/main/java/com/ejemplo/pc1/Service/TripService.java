@@ -18,6 +18,7 @@ public class TripService {
     private final userRepository userRepository;
     public RegisterResponseDTO postrip(RegisterRequestDTO dto){
 
+        return new RegisterResponseDTO();
     }
     private user getCurrentUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
