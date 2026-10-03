@@ -10,9 +10,7 @@ import com.ejemplo.pc1.excepctions.UserAlreadyExistsException;
 import com.ejemplo.pc1.model.user;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
-import org.springframework.boot.Banner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,16 +23,19 @@ public class SecurityService {
     private final JwtService jwtService;
     private final userRepository userRepository;
     @Transactional
-    public LoginResponseDTO register(RegisterRequestDTO dto) {
+    public RegisterResponseDTO register(RegisterRequestDTO dto) {
         if (userRepository.existsByUsername(dto.getUsername())) {
             throw new UserAlreadyExistsException("El username ya existe");
+        }
+        if(userRepository.existsByEmail(dto.getEmail())){
+            throw new UserAlreadyExistsException("El email ya existe");
         }
         user user = modelMapper.map(dto, user.class);
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user saved =userRepository.save(user);
-        String token = jwtService.generateToken(user.getUsername());
-        return new LoginResponseDTO(token,3600L);
-        }
+        RegisterResponseDTO responseDTO=RegisterResponseDTO.builder().id(saved.getId()).username(saved.getUsername()).email(saved.getEmail()).build();
+        return responseDTO;
+    }
     public LoginResponseDTO login( LoginRequestDTO dto){
         user user = userRepository.findByUsername(dto.getUsername())
                 .orElseThrow(()-> new RuntimeException("Credenciales Incorrectas"));

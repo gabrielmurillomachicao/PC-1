@@ -10,10 +10,12 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Builder
 public class RegisterRequestDTO {
     @NotBlank
     private String username;
+    @NotBlank @Email
+    private String email;
     @NotBlank @Size(min = 8)
     private String password;
 }

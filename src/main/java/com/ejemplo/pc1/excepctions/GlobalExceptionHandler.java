@@ -21,5 +21,34 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(Map.of("error", e.getMessage()));
     }
+    @ExceptionHandler(ForbiddenTripActionException.class)
+    public ResponseEntity<Map<String, String>> handleConflict3(RuntimeException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(Map.of("error", e.getMessage()));
+    }
+
+    @ExceptionHandler(TripNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleConflict4(RuntimeException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Map.of("error", e.getMessage()));
+    }
+    @ExceptionHandler(TripFullException.class)
+    public ResponseEntity<Map<String, String>> handleConflict5(RuntimeException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(Map.of("error", e.getMessage()));
+    }
+    @ExceptionHandler(AlreadyRequestedException.class)
+    public ResponseEntity<Map<String, String>> handleConflict6(RuntimeException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(Map.of("error", e.getMessage()));
+    }
+    @ExceptionHandler(TripOverlapException.class)
+    public ResponseEntity<Map<String, String>> handleConflict7(RuntimeException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(Map.of("error", e.getMessage()));
+    }
+
+
+
 
 }

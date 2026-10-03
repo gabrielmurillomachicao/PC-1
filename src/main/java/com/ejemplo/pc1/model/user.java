@@ -25,5 +25,5 @@ public class user {
  private String password;
  @Builder.Default
  @Column(nullable = false)
- private String role= "ROLE_USER";
+ private String role= "ROLE_ADMIN";
 }

@@ -4,6 +4,7 @@ import com.ejemplo.pc1.Service.SecurityService;
 import com.ejemplo.pc1.dtos.LoginRequestDTO;
 import com.ejemplo.pc1.dtos.LoginResponseDTO;
 import com.ejemplo.pc1.dtos.RegisterRequestDTO;
+import com.ejemplo.pc1.dtos.RegisterResponseDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class AuthController {
     private final SecurityService securityService;
 
     @PostMapping("/register")
-    public ResponseEntity<LoginResponseDTO> register(@Valid @RequestBody RegisterRequestDTO dto) {
+    public ResponseEntity<RegisterResponseDTO> register(@Valid @RequestBody RegisterRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(securityService.register(dto));
     }
 
