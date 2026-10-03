@@ -15,9 +15,16 @@ public class route {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Transient
     @ManyToOne
     private User driver;
+    @ManyToOne
+    @JoinColumn(name = "driver_id")
+    private user driverUser;
+    @Column(nullable = false)
     private String origin;
+    @Column(nullable = false)
     private String destination;
+    @Enumerated(EnumType.STRING)
     private Routestatus status;
 }

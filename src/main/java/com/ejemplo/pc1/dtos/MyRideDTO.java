@@ -1,6 +1,5 @@
 package com.ejemplo.pc1.dtos;
 
-import com.ejemplo.pc1.model.TripStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,21 +8,16 @@ import lombok.Setter;
 
 import java.time.ZonedDateTime;
 
-import static com.ejemplo.pc1.model.TripStatus.SCHEDULED;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TripResponseDTO {
-    private Long id;
-    private String driverUsername;
+public class MyRideDTO {
+    private String type;
+    private Long tripId;
+    private String status;
     private String origin;
     private String destination;
-    private Integer availableSeats;
-    @Builder.Default
-    private TripStatus status= SCHEDULED;
     private ZonedDateTime departureTime;
-    private Integer capacity;
 }
